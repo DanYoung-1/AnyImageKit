@@ -35,7 +35,7 @@ public struct CaptureOptionsInfo {
     
     /// 视频拍摄最大时间
     /// 默认 20 秒
-    public var videoMaximumDuration: TimeInterval = 20
+    public var videoMaximumDuration: TimeInterval = 60
     
     /// 相机预设
     /// iPadOS 环境下无效
@@ -82,7 +82,7 @@ extension CaptureMediaOption {
             return BundleHelper.captureLocalizedString(key: "Tap to take photo")
         }
         if contains(.video) {
-            return BundleHelper.captureLocalizedString(key: "Hode to record video")
+            return BundleHelper.captureLocalizedString(key: "Tap to record video")
         }
         return ""
     }

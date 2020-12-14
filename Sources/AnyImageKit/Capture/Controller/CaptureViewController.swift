@@ -183,10 +183,28 @@ extension CaptureViewController {
 extension CaptureViewController: CaptureButtonDelegate {
     
     func captureButtonDidTapped(_ button: CaptureButton) {
+			if options.mediaOptions == .photo {
         guard !capture.isSwitchingCamera else { return }
         impactFeedback()
         button.startProcessing()
         capture.capturePhoto()
+			} else {
+				if recorder.isRunning {
+						recorder.stopRunning()
+						button.startProcessing()
+				} else {
+					impactFeedback()
+					toolView.hideButtons(animated: true)
+					previewView.hideToolMask(animated: true)
+					tipsView.hideTips(afterDelay: 0, animated: true)
+					recorder.preferredAudioSettings = capture.recommendedAudioSetting
+					recorder.preferredVideoSettings = capture.recommendedVideoSetting
+					recorder.startRunning()
+				}
+			}
+			
+//			delegate?.captureDidCancel(self)
+
     }
     
     func captureButtonDidBeganLongPress(_ button: CaptureButton) {

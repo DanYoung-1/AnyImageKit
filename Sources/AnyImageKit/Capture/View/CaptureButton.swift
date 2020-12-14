@@ -104,38 +104,41 @@ extension CaptureButton {
 extension CaptureButton {
     
     @objc private func onTapped(_ sender: UITapGestureRecognizer) {
-        guard processState == .idle else { return }
-        switch sender.state {
-        case .recognized:
-            delegate?.captureButtonDidTapped(self)
-        default:
-            break
-        }
+					guard processState == .idle else { return }
+					processState = .pressing
+					startTime = Date()
+					circleView.setStyle(.large, animated: true)
+					buttonView.setStyle(.recording, animated: true)
+					delegate?.captureButtonDidTapped(self)
+					let displayLink = CADisplayLink(target: self, selector: #selector(onDisplayLink(_:)))
+					displayLink.preferredFramesPerSecond = 60
+					displayLink.add(to: .current, forMode: .default)
+					self.displayLink = displayLink
     }
      
     @objc private func onLongPressed(_ sender: UILongPressGestureRecognizer) {
-        switch sender.state {
-        case .began:
-            guard processState == .idle else { return }
-            processState = .pressing
-            startTime = Date()
-            circleView.setStyle(.large, animated: true)
-            buttonView.setStyle(.recording, animated: true)
-            delegate?.captureButtonDidBeganLongPress(self)
-            let displayLink = CADisplayLink(target: self, selector: #selector(onDisplayLink(_:)))
-            displayLink.preferredFramesPerSecond = 60
-            displayLink.add(to: .current, forMode: .default)
-            self.displayLink = displayLink
-        case .ended:
-            guard processState == .pressing else { return }
-            processState = .idle
-            progressView.setProgress(0.0)
-            circleView.setStyle(.small, animated: true)
-            buttonView.setStyle(.normal, animated: true)
-            delegate?.captureButtonDidEndedLongPress(self)
-        default:
-            break
-        }
+//        switch sender.state {
+//        case .began:
+//            guard processState == .idle else { return }
+//            processState = .pressing
+//            startTime = Date()
+//            circleView.setStyle(.large, animated: true)
+//            buttonView.setStyle(.recording, animated: true)
+//            delegate?.captureButtonDidBeganLongPress(self)
+//            let displayLink = CADisplayLink(target: self, selector: #selector(onDisplayLink(_:)))
+//            displayLink.preferredFramesPerSecond = 60
+//            displayLink.add(to: .current, forMode: .default)
+//            self.displayLink = displayLink
+//        case .ended:
+//            guard processState == .pressing else { return }
+//            processState = .idle
+//            progressView.setProgress(0.0)
+//            circleView.setStyle(.small, animated: true)
+//            buttonView.setStyle(.normal, animated: true)
+//            delegate?.captureButtonDidEndedLongPress(self)
+//        default:
+//            break
+//        }
     }
     
     @objc private func onDisplayLink(_ sender: CADisplayLink) {
