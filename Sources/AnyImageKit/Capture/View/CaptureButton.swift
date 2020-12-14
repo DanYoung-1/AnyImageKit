@@ -104,9 +104,7 @@ extension CaptureButton {
 extension CaptureButton {
     
     @objc private func onTapped(_ sender: UITapGestureRecognizer) {
-				switch sender.state {
-				case .began:
-						guard processState == .idle else { return }
+			if processState == .idle {
 						processState = .tapOn
 						startTime = Date()
 						circleView.setStyle(.large, animated: true)
@@ -116,16 +114,13 @@ extension CaptureButton {
 						displayLink.preferredFramesPerSecond = 60
 						displayLink.add(to: .current, forMode: .default)
 						self.displayLink = displayLink
-				case .ended:
-						guard processState == .pressing else { return }
-						processState = .tapOff
+			} else {
+						processState = .idle
 						progressView.setProgress(0.0)
 						circleView.setStyle(.small, animated: true)
 						buttonView.setStyle(.normal, animated: true)
-					delegate?.captureButtonDidTapped(self)
-				default:
-						break
-				}
+						delegate?.captureButtonDidTapped(self)
+			}
     }
      
     @objc private func onLongPressed(_ sender: UILongPressGestureRecognizer) {
