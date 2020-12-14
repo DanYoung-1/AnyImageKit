@@ -78,7 +78,7 @@ final class CaptureButton: UIControl {
             addGestureRecognizer(tapGesture)
         }
         if options.mediaOptions.contains(.video) {
-            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressed(_:)))
+            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(onTapped(_:)))
             addGestureRecognizer(longPressGesture)
         }
     }
@@ -122,7 +122,7 @@ extension CaptureButton {
 						progressView.setProgress(0.0)
 						circleView.setStyle(.small, animated: true)
 						buttonView.setStyle(.normal, animated: true)
-						delegate?.captureButtonDidEndedLongPress(self)
+					delegate?.captureButtonDidTapped(self)
 				default:
 						break
 				}
