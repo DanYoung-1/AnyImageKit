@@ -202,9 +202,6 @@ extension CaptureViewController: CaptureButtonDelegate {
 					recorder.startRunning()
 				}
 			}
-			
-//			delegate?.captureDidCancel(self)
-
     }
     
     func captureButtonDidBeganLongPress(_ button: CaptureButton) {

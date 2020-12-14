@@ -104,16 +104,28 @@ extension CaptureButton {
 extension CaptureButton {
     
     @objc private func onTapped(_ sender: UITapGestureRecognizer) {
-					guard processState == .idle else { return }
-					processState = .pressing
-					startTime = Date()
-					circleView.setStyle(.large, animated: true)
-					buttonView.setStyle(.recording, animated: true)
-					delegate?.captureButtonDidTapped(self)
-					let displayLink = CADisplayLink(target: self, selector: #selector(onDisplayLink(_:)))
-					displayLink.preferredFramesPerSecond = 60
-					displayLink.add(to: .current, forMode: .default)
-					self.displayLink = displayLink
+				switch sender.state {
+				case .began:
+						guard processState == .idle else { return }
+						processState = .tapOn
+						startTime = Date()
+						circleView.setStyle(.large, animated: true)
+						buttonView.setStyle(.recording, animated: true)
+						delegate?.captureButtonDidTapped(self)
+						let displayLink = CADisplayLink(target: self, selector: #selector(onDisplayLink(_:)))
+						displayLink.preferredFramesPerSecond = 60
+						displayLink.add(to: .current, forMode: .default)
+						self.displayLink = displayLink
+				case .ended:
+						guard processState == .pressing else { return }
+						processState = .tapOff
+						progressView.setProgress(0.0)
+						circleView.setStyle(.small, animated: true)
+						buttonView.setStyle(.normal, animated: true)
+						delegate?.captureButtonDidEndedLongPress(self)
+				default:
+						break
+				}
     }
      
     @objc private func onLongPressed(_ sender: UILongPressGestureRecognizer) {
@@ -143,7 +155,7 @@ extension CaptureButton {
     
     @objc private func onDisplayLink(_ sender: CADisplayLink) {
         switch processState {
-        case .pressing:
+        case .tapOn:
             let currentTime = Date()
             let timeInterval = currentTime.timeIntervalSince1970 - startTime.timeIntervalSince1970
             if timeInterval >= limitInterval {
@@ -171,5 +183,7 @@ extension CaptureButton {
         case idle
         case pressing
         case processing
+				case tapOn
+				case tapOff
     }
 }
