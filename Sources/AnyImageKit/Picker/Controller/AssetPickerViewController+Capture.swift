@@ -19,7 +19,7 @@ extension AssetPickerViewController {
         #if !targetEnvironment(simulator)
         var options = manager.options.captureOptions
         options.enableDebugLog = manager.options.enableDebugLog
-        let controller = ImageCaptureController(options: options, delegate: self)
+        let controller = ImageCaptureController(options: options, outputURL: nil, delegate: self)
         present(controller, animated: true, completion: nil)
         #else
         let alert = UIAlertController(title: "Error", message: "Camera is unavailable on simulator", preferredStyle: .alert)

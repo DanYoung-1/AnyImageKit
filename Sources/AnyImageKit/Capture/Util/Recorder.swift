@@ -29,6 +29,12 @@ final class Recorder {
     
     private var writer: AVAssetWriter?
     private var writerInputs: [AVMediaType: AVAssetWriterInput] = [:]
+	
+		var outputURL: URL?
+		
+		init(outputURL: URL?) {
+			self.outputURL = outputURL
+		}
 }
 
 extension Recorder {
@@ -43,7 +49,7 @@ extension Recorder {
             guard self.isRunning else { return }
             
             if self.writer == nil, mediaType == .video {
-                self.writer = self.createWriter()
+							self.writer = self.createWriter()
             }
             
             guard let writer = self.writer else {
@@ -137,11 +143,16 @@ extension Recorder {
         }
     }
     
-    private func createWriter() -> AVAssetWriter? {
+	private func createWriter() -> AVAssetWriter? {
         do {
-            let outputURL = FileHelper.getTemporaryUrl(by: .video, fileType: .mp4)
-            _print("Create AVAssetWriter at utl: \(outputURL)")
-            return try AVAssetWriter(outputURL: outputURL, fileType: .mp4)
+					if let outputURL = self.outputURL {
+						_print("Create AVAssetWriter at utl: \(outputURL)")
+						return try AVAssetWriter(outputURL: outputURL, fileType: .mp4)
+					} else {
+						let outputURL = FileHelper.getTemporaryUrl(by: .video, fileType: .mp4)
+						_print("Create AVAssetWriter at utl: \(outputURL)")
+						return try AVAssetWriter(outputURL: outputURL, fileType: .mp4)
+					}
         } catch {
             _print("Fail to create AVAssetWriter, error=\(error)")
         }

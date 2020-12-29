@@ -25,7 +25,8 @@ extension ImageCaptureControllerDelegate {
 open class ImageCaptureController: AnyImageNavigationController {
     
     open weak var captureDelegate: ImageCaptureControllerDelegate?
-    
+		var outputURL: URL?
+	
     public required init() {
         super.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = .fullScreen
@@ -33,9 +34,10 @@ open class ImageCaptureController: AnyImageNavigationController {
     
     /// Init Capture
     /// - Note: iPadOS will use `UIImagePickerController` instead.
-    public convenience init(options: CaptureOptionsInfo, delegate: ImageCaptureControllerDelegate) {
+	public convenience init(options: CaptureOptionsInfo, outputURL: URL?, delegate: ImageCaptureControllerDelegate) {
         self.init()
         self.update(options: options)
+				self.outputURL = outputURL
         self.captureDelegate = delegate
     }
     
@@ -79,7 +81,7 @@ extension ImageCaptureController {
             rootViewController.trackObserver = self
             viewControllers = [rootViewController]
         } else {
-            let rootViewController = CaptureViewController(options: options)
+					let rootViewController = CaptureViewController(options: options, outputURL: outputURL)
             rootViewController.delegate = self
             rootViewController.trackObserver = self
             viewControllers = [rootViewController]

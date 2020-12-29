@@ -49,7 +49,8 @@ final class CaptureViewController: AnyImageViewController {
     }()
     
     private lazy var recorder: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(outputURL: outputURL)
+				
         recorder.delegate = self
         return recorder
     }()
@@ -63,8 +64,11 @@ final class CaptureViewController: AnyImageViewController {
     private var permissionsChecked: Bool = false
     private let options: CaptureOptionsInfo
     
-    init(options: CaptureOptionsInfo) {
+	
+		private let outputURL: URL?
+		init(options: CaptureOptionsInfo, outputURL: URL?) {
         self.options = options
+				self.outputURL = outputURL
         super.init(nibName: nil, bundle: nil)
     }
     
