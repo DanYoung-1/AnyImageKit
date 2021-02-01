@@ -40,7 +40,7 @@ public struct CaptureOptionsInfo {
     /// 相机预设
     /// iPadOS 环境下无效
     /// 默认支持从 1920*1080@60 开始查找支持的最佳分辨率
-    public var preferredPresets: [CapturePreset] = CapturePreset.createPresets(enableHighResolution: false, enableHighFrameRate: false)
+    public var preferredPresets: [CapturePreset] = CapturePreset.createPresets(enableHighResolution: false, enableHighFrameRate: true)
     
     /// 启用调试日志
     /// 默认：false
