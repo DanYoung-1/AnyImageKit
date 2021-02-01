@@ -29,6 +29,10 @@ extension CapturePreset {
             return [.hd1920x1080_30, .hd1280x720_30]
         }
     }
+	
+	public static func createPresets(isVideo: Bool) -> [CapturePreset] {
+		isVideo ? [hd352x288_30,hd352x288_30] : [hd1920x1080_30,hd1280x720_30]
+	}
 }
 
 extension CapturePreset {
@@ -40,9 +44,14 @@ extension CapturePreset {
     /// 1920x1080@60
     public static let hd1920x1080_60 = CapturePreset(width: 1920, height: 1080, frameRate: 60)
     /// 1920x1080@30
-    public static let hd1920x1080_30 = CapturePreset(width: 352, height: 288, frameRate: 30)
     /// 1280x720@60
     public static let hd1280x720_60 = CapturePreset(width: 1280, height: 720, frameRate: 60)
     /// 1280x720@30
-    public static let hd1280x720_30 = CapturePreset(width: 352, height: 288, frameRate: 30)
+	
+	//video
+		public static let hd352x288_30 = CapturePreset(width: 352, height: 288, frameRate: 30)
+	
+	//photo
+		public static let hd1920x1080_30 = CapturePreset(width: 1920, height: 1080, frameRate: 30)
+    public static let hd1280x720_30 = CapturePreset(width: 1280, height: 720, frameRate: 30)
 }
