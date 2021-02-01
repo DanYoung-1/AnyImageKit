@@ -40,9 +40,9 @@ extension CapturePreset {
     /// 1920x1080@60
     public static let hd1920x1080_60 = CapturePreset(width: 1920, height: 1080, frameRate: 60)
     /// 1920x1080@30
-    public static let hd1920x1080_30 = CapturePreset(width: 1920, height: 1080, frameRate: 30)
+    public static let hd1920x1080_30 = CapturePreset(width: 352, height: 288, frameRate: 30)
     /// 1280x720@60
     public static let hd1280x720_60 = CapturePreset(width: 1280, height: 720, frameRate: 60)
     /// 1280x720@30
-    public static let hd1280x720_30 = CapturePreset(width: 1280, height: 720, frameRate: 30)
+    public static let hd1280x720_30 = CapturePreset(width: 352, height: 288, frameRate: 30)
 }
