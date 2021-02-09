@@ -31,7 +31,7 @@ extension CapturePreset {
     }
 	
 	public static func createPresets(isVideo: Bool) -> [CapturePreset] {
-		isVideo ? [hd352x288_30,hd352x288_30] : [hd1920x1080_30,hd1280x720_30]
+		isVideo ? [hd352x288_30,hd352x288_30] : [hd1920x1080_30,hd1920x1080_30]
 	}
 }
 
